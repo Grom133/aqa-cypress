@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cypress run --config-file cypress.qauto.config.js --spec cypress/e2e/qauto/qauto-login.cy.js",
+    "test:qauto:garage-expenses": "cypress run --config-file cypress.qauto.config.js --spec cypress/e2e/qauto/qauto-garage-expenses.cy.js",
+    "test:qauto2:garage-expenses": "cypress run --config-file cypress.qauto2.config.js --spec cypress/e2e/qauto/qauto-garage-expenses.cy.js",
+    "test:qauto": "cypress run --config-file cypress.qauto.config.js --spec cypress/e2e/qauto/qauto-login.cy.js",
+    "test:qauto2": "cypress run --config-file cypress.qauto2.config.js --spec cypress/e2e/qauto/qauto2-login.cy.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +23,8 @@
   },
   "homepage": "https://github.com/Grom133/aqa-cypress#readme",
   "devDependencies": {
-    "cypress": "^15.11.0"
+    "@cypress/xpath": "^2.0.3",
+    "cypress": "^15.11.0",
+    "mochawesome": "^7.1.4"
   }
 }

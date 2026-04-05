@@ -10,6 +10,7 @@ coverage/
 cypress/videos/
 cypress/screenshots/
 cypress/downloads/
+cypress/reports/
 
 # Logs
 npm-debug.log*
