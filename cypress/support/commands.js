@@ -1,4 +1,3 @@
-<<<<<<< cypress-reporter
 Cypress.Commands.add('useTestEnvironment', (target) => {
   cy.wrap(null).then(() => {
     const { testEnvironments } = require('./testEnvironments')
@@ -29,6 +28,19 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options = {}) => {
   })
 })
 
+Cypress.Commands.overwrite('type', (originalFn, element, text, options) => {
+  if (options && options.sensitive) {
+    options.log = false
+    Cypress.log({
+      $el: element,
+      name: 'type',
+      message: '*'.repeat(text.length),
+    })
+  }
+
+  return originalFn(element, text, options)
+})
+
 Cypress.Commands.add('visitLoginPage', () => {
   cy.visit(Cypress.env('baseUrl') || '/')
 })
@@ -57,33 +69,29 @@ Cypress.Commands.add('openAuthenticatedPage', (path = '/panel/garage') => {
   cy.loginToCurrentApp()
   cy.visit(`${Cypress.env('baseUrl')}${path}`)
 })
-=======
+
 Cypress.Commands.add('login', (email, password) => {
   cy.visit('https://qauto.forstudy.space/', {
     auth: {
       username: 'guest',
       password: 'welcome2qauto',
     },
-  });
+  })
 
-  cy.contains('Sign In').click();
+  cy.contains('Sign In').click()
+  cy.get('input[name="email"]').type(email)
+  cy.get('input[name="password"]').type(password, { sensitive: true })
+  cy.contains('Login').click()
+})
 
-  cy.get('input[name="email"]').type(email);
-  cy.get('input[name="password"]').type(password, { sensitive: true });
-
-  cy.contains('Login').click();
-});
-
-Cypress.Commands.overwrite('type', (originalFn, element, text, options) => {
-  if (options && options.sensitive) {
-    options.log = false;
-    Cypress.log({
-      $el: element,
-      name: 'type',
-      message: '*'.repeat(text.length),
-    });
-  }
-
-  return originalFn(element, text, options);
-});
->>>>>>> main
+Cypress.Commands.add('createExpenseByApi', (expensePayload) => {
+  return cy.request({
+    method: 'POST',
+    url: `${Cypress.env('baseUrl')}/api/expenses`,
+    auth: {
+      username: Cypress.env('basicAuthUsername'),
+      password: Cypress.env('basicAuthPassword'),
+    },
+    body: expensePayload,
+  })
+})
