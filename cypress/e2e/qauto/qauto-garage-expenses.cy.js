@@ -81,12 +81,11 @@ describe('QAuto garage and expenses', () => {
       expect(createdCar.mileage).to.be.a('number')
     })
 
-    const yesterday = new Date()
-    yesterday.setDate(yesterday.getDate() - 1)
+    const today = new Date()
     const expenseDate = [
-      yesterday.getDate(),
-      String(yesterday.getMonth() + 1).padStart(2, '0'),
-      yesterday.getFullYear(),
+      today.getDate(),
+      String(today.getMonth() + 1).padStart(2, '0'),
+      today.getFullYear(),
     ].join('.')
 
     const expense = {
@@ -151,7 +150,6 @@ describe('QAuto garage and expenses', () => {
     })
 
     const today = new Date()
-    today.setDate(today.getDate() - 1)
     const reportedAt = [
       today.getFullYear(),
       String(today.getMonth() + 1).padStart(2, '0'),
